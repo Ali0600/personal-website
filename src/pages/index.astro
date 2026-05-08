@@ -1,0 +1,36 @@
+---
+import Terminal from '../components/Terminal.astro';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ali — devops portfolio</title>
+    <meta
+      name="description"
+      content="Ali Hassan — DevOps engineer. Portfolio of apps, all running on a single-node k3s cluster with GitOps deploys."
+    />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script is:inline>
+      try {
+        const t = localStorage.getItem('terminal-theme');
+        const map = {
+          default: { bg: '#0a0e0a', fg: '#33ff66', accent: '#7fffaa', dim: '#2a8c44' },
+          solarized: { bg: '#002b36', fg: '#93a1a1', accent: '#b58900', dim: '#586e75' },
+          dracula: { bg: '#282a36', fg: '#f8f8f2', accent: '#bd93f9', dim: '#6272a4' },
+        };
+        const theme = map[t] || map.default;
+        const r = document.documentElement;
+        r.style.setProperty('--term-bg', theme.bg);
+        r.style.setProperty('--term-fg', theme.fg);
+        r.style.setProperty('--term-accent', theme.accent);
+        r.style.setProperty('--term-dim', theme.dim);
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <Terminal />
+  </body>
+</html>

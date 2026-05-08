@@ -1,0 +1,38 @@
+---
+import '../styles/terminal.css';
+import { root, type DirNode } from '../lib/filesystem';
+
+function* walk(node: DirNode, parts: string[] = []): Generator<{ path: string; content: string }> {
+  for (const child of Object.values(node.children)) {
+    const childParts = [...parts, child.name];
+    if (child.type === 'file') {
+      yield { path: childParts.join('/'), content: child.content };
+    } else {
+      yield* walk(child, childParts);
+    }
+  }
+}
+
+const allFiles = Array.from(walk(root));
+---
+
+<div id="terminal-root" class="term"></div>
+
+<noscript>
+  <div class="noscript-fallback">
+    <h1>ali — devops portfolio</h1>
+    <p>This site is an interactive terminal. JavaScript is disabled, so here is a static index of the same content.</p>
+    {allFiles.map((f) => (
+      <article>
+        <h2>/{f.path}</h2>
+        <pre>{f.content}</pre>
+      </article>
+    ))}
+  </div>
+</noscript>
+
+<script>
+  import { mountTerminal } from './Terminal.client';
+  const el = document.getElementById('terminal-root');
+  if (el) mountTerminal(el as HTMLElement);
+</script>

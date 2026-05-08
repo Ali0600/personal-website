@@ -1,0 +1,12 @@
+node_modules
+dist
+.astro
+.env
+.env.production
+.env.local
+.DS_Store
+*.log
+
+# Claude Code
+.claude/
+CLAUDE.local.md
